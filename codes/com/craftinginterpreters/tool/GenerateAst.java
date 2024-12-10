@@ -41,4 +41,32 @@ public class GenerateAst {
     writer.println("}");
     writer.close();
   }
+
+  private static void defineType(
+    PrintWriter writer, String baseName,
+    String className, String fieldList
+  ) {
+    writer.println("  static class " + className + " extends " + baseName + " {");
+
+    // コンストラクタ
+    writer.println("    " + className + "(" + fieldList + ") {");
+
+    // パラメータをフィールドへ代入
+    String[] fields = fieldList.split(", ");
+    for (String field : fields) {
+      String name = field.split(" ")[1];
+      writer.println("      this." + name + " = " + name + ";");
+    }
+
+    writer.println("    }");
+
+    // フィールド
+    writer.println();
+    for (String field : fields) {
+      writer.println("    final " + field + ";");
+    }
+
+    writer.println("  }");
+  }
+
 }
