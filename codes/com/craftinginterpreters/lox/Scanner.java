@@ -126,6 +126,7 @@ class Scanner {
   private void string() {
     while (peek() != '"' && !isAtEnd()) {
       if (peek() == '\n') line++;
+      else if (peek() == '\\' && peekNext() == '"') advance();
       advance();
     }
 
@@ -137,6 +138,7 @@ class Scanner {
     advance();
 
     String value = source.substring(start + 1, current - 1);
+
     addToken(STRING, value);
   }
 
